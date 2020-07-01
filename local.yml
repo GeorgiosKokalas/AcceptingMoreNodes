@@ -14,5 +14,5 @@
   tasks: 
   - include_tasks: "thingstodo.yml"
     vars:
-      headnode: '{{ headnode_name }}'
+      IP: '{{ headnode_name }}'
       worker_MAC: '{{ worker_MAC_address }}'
