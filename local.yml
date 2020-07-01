@@ -12,7 +12,7 @@
     prompt: "Please insert the desired IP address of the extra worker node"
   
   tasks: 
-  - include_tasks: "step.2.yml"
+  - include_tasks: "thingstodo.yml"
     vars:
       headnode: '{{ headnode_name }}'
       worker_MAC: '{{ worker_MAC_address }}'
