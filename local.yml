@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  remote_user: root
+  
+  vars_prompt:
+  - name: headnode_name
+    #private: no
+    prompt: "Please insert the name of the extra worker node" 
+  
+  - name: worker_MAC_address
+    #private: no
+    prompt: "Please insert the desired IP address of the extra worker node"
+  
+  tasks: 
+  - include_tasks: "step.2.yml"
+    vars:
+      headnode: '{{ headnode_name }}'
+      worker_MAC: '{{ worker_MAC_address }}'

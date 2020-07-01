@@ -1,0 +1,33 @@
+---
+#CONFIGURING INITIALLIZATION for the SSH CONNECTION
+#---------------------------------------
+
+#Modifying /etc/hosts
+- name: Modifying /etc/hosts to add the first worker node
+  become: yes
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ IP }}\t\t{{ Node_Name }}"
+
+
+
+#++++++++++++++++++++++++++++
+#Modifying /etc/dhcp/dhcpd.conf
+- name: Add new global and local commands to the file
+  become: yes
+  blockinfile:
+    path: /etc/dhcp/dhcpd.conf
+    insertafter: "              host worker0 {
+                      hardware ethernet {{ worker_MAC }}; # find the MAC correct address
+                      fixed-address 127.27.1.2;
+              }"
+    block: |
+              host {{ Node_Name }} {
+                      hardware ethernet {{ worker_MAC }}; # find the MAC correct address
+                      fixed-address {{ IP }};
+              }
+
+- name: Restarting DHCP
+  become: yes 
+  command:
+    cmd: systemctl restart isc-dhcp-server
